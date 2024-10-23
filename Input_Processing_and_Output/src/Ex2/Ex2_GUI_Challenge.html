@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>GUI Challenge</title>
+    </head>
+    <body>
+        <label>
+            What is the input String?
+            <input id="inputString"/>
+        </label>
+        <p id="result"></p>
+        <script>
+            let input = document.getElementById('inputString');
+            let result = document.getElementById('result');
+
+            input.addEventListener('input', function () {
+                let valueLength = this.value.length;
+                if (valueLength !== 0) {
+                    result.textContent = this.value + " has " + valueLength + " characters";
+                } else {
+                    result.textContent = "";
+                }
+            });
+        </script>
+    </body>
+</html>
