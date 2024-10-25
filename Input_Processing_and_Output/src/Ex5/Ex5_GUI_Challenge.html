@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>GUI Challenge</title>
+    </head>
+    <body>
+        <label>
+            What is the first number?
+            <input type="number" id="firstInput"/>
+        </label>
+        <br>
+        <label>
+            What is the second number?
+            <input type="number" id="secondInput"/>
+        </label>
+        <p id="result"></p>
+        <script>
+            let firstInput = document.getElementById('firstInput');
+            let secondInput = document.getElementById('secondInput');
+            let result = document.getElementById('result');
+
+            firstInput.addEventListener('input', function () {
+                printResult();
+            });
+
+            secondInput.addEventListener('input', function () {
+                printResult();
+            });
+
+            function printResult() {
+                let firstInputValue = firstInput.value;
+                let secondInputValue = secondInput.value;
+                if(firstInputValue != "" && secondInputValue != "" ) {
+                    let firstNumber = parseInt(firstInputValue, 10);
+                    let secondNumber = parseInt(secondInputValue, 10);
+
+                    if (firstNumber < 0 || secondNumber < 0) {
+                        result.textContent = "Negative numbers are not allowed. Retry.";
+                    } else {
+                        result.innerHTML = firstNumber + " + "  + secondNumber + " = " + (firstNumber + secondNumber) + "<br>" +
+                            firstNumber + " - " + secondNumber + " = " + (firstNumber - secondNumber) + "<br>" +
+                            firstNumber + " * " + secondNumber + " = " + (firstNumber * secondNumber) + "<br>" +
+                            firstNumber + " / " + secondNumber + " = " + (firstNumber / secondNumber);
+                    }
+                } else {
+                    result.textContent = "";
+                }
+            }
+        </script>
+    </body>
+</html>
