@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GUI Challenge</title>
+</head>
+<body>
+<label>
+    What is the length of the room?
+    <input type="number" id="roomLengthInput"/>
+</label>
+<br>
+<label>
+    What is the width of the room?
+    <input type="number" id="roomWidthInput"/>
+</label>
+<p id="result"></p>
+<script>
+    let roomLengthInput = document.getElementById('roomLengthInput');
+    let roomWidthInput = document.getElementById('roomWidthInput');
+    let result = document.getElementById('result');
+
+    roomLengthInput.addEventListener('input', function () {
+        printResult();
+    });
+
+    roomWidthInput.addEventListener('input', function () {
+        printResult();
+    });
+
+    function printResult() {
+        let roomLengthValue = roomLengthInput.value;
+        let roomWidthValue = roomWidthInput.value;
+        if(roomLengthValue != "" && roomWidthValue != "" ) {
+            let roomLength = parseInt(roomLengthValue, 10);
+            let roomWidth = parseInt(roomWidthValue, 10);
+
+            if (roomLength < 0 || roomWidth < 0) {
+                result.textContent = "Negative numbers are not allowed. Retry.";
+            } else {
+                let areaInFeet = roomLength * roomWidth;
+                let areaInSquareMeters = areaInFeet * 0.09290304;
+                result.innerHTML = "The area is <br>" + areaInFeet + " square feet <br>" + areaInSquareMeters + " square meters";
+            }
+        } else {
+            result.textContent = "";
+        }
+    }
+</script>
+</body>
+</html>
