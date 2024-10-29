@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Paint Calculator App</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="room_shape_text">Which shape is your room?</string>
+    <string name="rectangle_button_text">Rectangular</string>
+    <string name="round_button_text">Round</string>
+    <string name="l_shape_button_text">L-Shape</string>
+    <string name="output_text" />
+    <string name="rectangle_length_text">How long is your room?</string>
+    <string name="rectangle_width_text">How wide is your room?</string>
+    <string name="round_radius_text">Which is the radius of the room?</string>
+    <string name="l_shape_instructions_text">"Write the room's measurements as follow:"</string>
+    <string name="l_shape_m1_text">Measurement 1:</string>
+    <string name="l_shape_m2_text">Measurement 2:</string>
+    <string name="l_shape_m3_text">Measurement 3:</string>
+    <string name="l_shape_m4_text">Measurement 4:</string>
+    <string name="negative_or_none_measurements_warning">Negative or none measurements don\'t make sense. Exit.</string>
+</resources>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/FragmentRoomShape">
+
+    <fragment
+        android:id="@+id/FragmentRoomShape"
+        android:name="com.paintcalculatorapp.FragmentRoomShape"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_room_shape">
+
+        <action
+            android:id="@+id/action_FragmentRoomShape_to_FragmentRectangularRoom"
+            app:destination="@id/FragmentRectangularRoom" />
+        <action
+            android:id="@+id/action_FragmentRoomShape_to_FragmentRoundRoom"
+            app:destination="@id/FragmentRoundRoom" />
+        <action
+            android:id="@+id/action_FragmentRoomShape_to_FragmentLShapeRoom"
+            app:destination="@id/FragmentLShapeRoom" />
+    </fragment>
+    <fragment
+        android:id="@+id/FragmentRectangularRoom"
+        android:name="com.paintcalculatorapp.FragmentRectangularRoom"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_rectangular_room">
+
+        <action
+            android:id="@+id/action_FragmentRectangularRoom_to_FragmentRoomShape"
+            app:destination="@id/FragmentRoomShape" />
+    </fragment>
+    <fragment
+        android:id="@+id/FragmentRoundRoom"
+        android:name="com.paintcalculatorapp.FragmentRoundRoom"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_round_room">
+
+        <action
+            android:id="@+id/action_FragmentRoundRoom_to_FragmentRoomShape"
+            app:destination="@id/FragmentRoomShape" />
+    </fragment>
+    <fragment
+        android:id="@+id/FragmentLShapeRoom"
+        android:name="com.paintcalculatorapp.FragmentLShapeRoom"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_l_shape_room">
+
+        <action
+            android:id="@+id/action_FragmentLShapeRoom_to_FragmentRoomShape"
+            app:destination="@id/FragmentRoomShape" />
+    </fragment>
+</navigation>
