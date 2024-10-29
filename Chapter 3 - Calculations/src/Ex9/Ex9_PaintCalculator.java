@@ -82,6 +82,12 @@ public class Ex9_PaintCalculator {
                 System.out.print("Measurement 4: ");
                 BigDecimal m4 = sc.nextBigDecimal();
 
+                if (m1.signum() < 1 || m2.signum() < 1 || m3.signum() < 1 || m4.signum() < 1) {
+                    System.out.println("Negative or none measurements don't make sense. Exit.");
+                    sc.close();
+                    System.exit(0);
+                }
+
                 BigDecimal firstArea = m2.multiply(m3);
                 BigDecimal secondArea = (m1.subtract(m3)).multiply(m2.subtract(m4));
                 return firstArea.add(secondArea);
