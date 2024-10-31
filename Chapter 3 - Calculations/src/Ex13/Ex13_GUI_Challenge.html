@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GUI Challenge</title>
+</head>
+<body>
+<label>
+    What is the principal amount?
+    <input type="number" id="principal"/>
+</label>
+<br>
+<label>
+    What is the rate?
+    <input type="number" id="interestRate"/>
+</label>
+<br>
+<label>
+    What is the number of years?
+    <input type="number" id="years"/>
+</label>
+<br>
+<label>
+    What is the number of times the interest is compounded per year?
+    <input type="number" id="timesInterestYearlyCompounded"/>
+</label>
+<p id="result"></p>
+<script>
+    let principal = document.getElementById('principal');
+    let interestRate = document.getElementById('interestRate');
+    let years = document.getElementById('years');
+    let timesInterestYearlyCompounded = document.getElementById('timesInterestYearlyCompounded');
+    let result = document.getElementById('result');
+
+    principal.addEventListener('input', function () {
+        printResult();
+    });
+
+    interestRate.addEventListener('input', function () {
+        printResult();
+    });
+
+    years.addEventListener('input', function () {
+        printResult();
+    });
+
+    timesInterestYearlyCompounded.addEventListener('input', function () {
+        printResult();
+    });
+
+    function printResult() {
+        let principalValue = principal.value;
+        let interestRateValue = interestRate.value;
+        let yearsValue = years.value;
+        let timesInterestYearlyCompoundedValue = timesInterestYearlyCompounded.value;
+
+        if(principalValue != "" && interestRateValue != "" && yearsValue != "" && timesInterestYearlyCompoundedValue != "") {
+            let principalFloat = parseFloat(principalValue, 10);
+            let interestRateFloat = parseFloat(interestRateValue, 10);
+            let interestRatePercentage = interestRateFloat / 100;
+            let yearsInt = parseInt(years.value);
+            let timesInterestYearlyCompoundedInt = parseInt(timesInterestYearlyCompounded.value);
+
+            if (principalFloat < 0 || interestRateFloat < 0 || yearsInt < 0 || timesInterestYearlyCompoundedInt < 0) {
+                result.textContent = "Negative numbers are not allowed. Retry.";
+            } else if(years.value > 160) {
+                result.textContent = "Sorry, humans can't live that long!";
+            } else {
+                let investment = principalFloat * Math.pow((1 + (interestRatePercentage / timesInterestYearlyCompoundedInt)), (timesInterestYearlyCompoundedInt * yearsInt));
+                let investmentFloat = parseFloat(investment, 10).toFixed(2);
+                result.innerHTML = "$" + principalFloat + " invested at " + interestRateFloat +
+                    "% for " + yearsInt + " years compounded " + timesInterestYearlyCompoundedInt +
+                    " times per year is $" + investmentFloat + ".";
+            }
+        } else {
+            result.textContent = "";
+        }
+    }
+</script>
+</body>
+</html>
