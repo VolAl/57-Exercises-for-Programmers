@@ -1,0 +1,163 @@
+Algeria,18
+Cameroon,16
+Egypt,18
+Eswatini,18
+Ethiopia,18
+Kenya,18
+Lesotho,18
+Libya,18
+Mali,18
+Mauritania,18
+Mauritius,18
+Mayotte,18
+Morocco,18
+Mozambique,17
+Namibia,18
+Niger,18
+Nigeria,18
+Réunion (France),18
+Rwanda,18
+Senegal,16
+South Africa,17
+Tanzania,18
+Tunisia,18
+Uganda,18
+Zambia,16
+Zimbabwe,16
+Canada,17
+Mexico,18
+United States,17
+Costa Rica,18
+El Salvador,18
+Guatemala,16
+Honduras,18
+Nicaragua,18
+Panama,18
+Argentina,18
+Bolivia,18
+Brazil,18
+Chile,18
+Colombia,16
+Ecuador,18
+Falkland Islands,17
+French Guiana,17
+Guyana,17
+Paraguay,18
+Peru,18
+Suriname,18
+Uruguay,18
+Venezuela,18
+Anguilla,18
+Bahamas,17
+Cayman Islands,17
+Cuba,18
+Curaçao,18
+Dominican Republic,18
+Guadeloupe,17
+Jamaica,18
+Martinique,17
+Puerto Rico (American territory),18
+Saint Barthélemy,17
+Saint Martin,18
+Trinidad and Tobago,17
+St. Kitts and Nevis,18
+US Virgin Islands (American territory),18
+Bahrain,18
+Iran,18
+Iraq,17
+Israel,16
+Jordan,18
+Kuwait,18
+Lebanon,18
+Oman,18
+Qatar,21
+Saudi Arabia,18
+Syria,18
+United Arab Emirates,17
+Yemen,18
+Afghanistan,18
+Bangladesh,18
+India,18
+Nepal,18
+Pakistan,18
+Sri Lanka,17
+Maldives,18
+China,18
+Hong Kong,18
+Japan,18
+Macau,18
+South Korea,18
+Taiwan,18
+Brunei,18
+Myanmar,18
+Cambodia,18
+Indonesia,17
+Laos,18
+Malaysia,17
+Philippines,17
+Singapore,18
+Thailand,18
+Vietnam,18
+Austria,17
+Belgium,17
+Bulgaria,18
+Croatia,18
+Cyprus,18
+Czech Republic,18
+Denmark,17
+Estonia,18
+Finland,18
+France,18
+Germany,18
+Gibraltar,17
+Greece,17
+Hungary,17
+Iceland,17
+Ireland,17
+Italy,18
+Latvia,18
+Liechtenstein,18
+Lithuania,18
+Luxembourg,18
+Malta,18
+Netherlands,17
+Norway,18
+Poland,18
+Portugal,18
+Romania,18
+Slovakia,18
+Slovenia,18
+Spain,18
+Sweden,18
+Switzerland,17
+Turkey,18
+United Kingdom,18
+Albania,18
+Andorra,18
+Armenia,18
+Azerbaijan,18
+Belarus,18
+Bosnia and Herzegovina,18
+Georgia,17
+Guernsey,17
+Isle of Man,16
+Jersey,17
+Kosovo,18
+Moldova,18
+Monaco,18
+Montenegro,18
+Northern Cyprus,18
+North Macedonia,18
+Russia,18
+San Marino,18
+Serbia,18
+Ukraine,18
+American Samoa (American territory),16
+Australia,18
+Fiji,17
+Guam (American territory),16
+Marshall Islands,18
+New Zealand,16
+Northern Mariana Islands (American territory),15
+Papua New Guinea,18
+Tonga,18
