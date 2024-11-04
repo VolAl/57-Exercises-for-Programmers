@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GUI Challenge</title>
+</head>
+<body>
+<h1>Temperature Converter</h1>
+<h2>Please select the conversion scales</h2>
+
+<label for="from">From:</label>
+<select name="from" id="from">
+    <option value="" selected disabled hidden>Select an Option</option>
+    <option value="C">Celsius</option>
+    <option value="F">Fahrenheit</option>
+    <option value="K">Kelvin</option>
+</select>
+<label for="to">To:</label>
+<select name="to" id="to">
+    <option value="" selected disabled hidden>Select an Option</option>
+    <option value="C">Celsius</option>
+    <option value="F">Fahrenheit</option>
+    <option value="K">Kelvin</option>
+</select>
+<br>
+<label>
+    Please enter the temperature to convert:
+    <input type="number" id="temperature"/>
+</label>
+
+<p id="output"></p>
+
+<script>
+    let to = document.getElementById('to');
+    let from = document.getElementById('from');
+    let temperature = document.getElementById('temperature');
+    let output = document.getElementById('output');
+
+    to.addEventListener('click', function () {
+        printResult();
+    });
+
+    from.addEventListener('click', function () {
+        printResult();
+    });
+
+    temperature.addEventListener('input', function () {
+        printResult();
+    });
+
+    function printResult() {
+        let fromValue = from.value;
+        let toValue = to.value;
+        let temperatureValue = temperature.value;
+
+        if(fromValue != "" && toValue != "" && temperatureValue != "") {
+            let temperatureValueFloat = parseFloat(temperatureValue, 10);
+
+            let result;
+            switch (fromValue+toValue) {
+                case "FC":
+                    result = (temperatureValueFloat - 32) * 5 / 9;
+                    break;
+                case "CF":
+                    result = (temperatureValueFloat * 9 / 5) + 32;
+                    break;
+                case "FK":
+                    result = ((temperatureValueFloat - 32) / 1.8) + 273.15;
+                    break;
+                case "KF":
+                    result = ((temperatureValueFloat - 273.15) * 1.8) + 32;
+                    break;
+                case "CK":
+                    result = temperatureValueFloat + 273.15;
+                    break;
+                case "KC":
+                    result = temperatureValueFloat - 273.15;
+                    break;
+                default:
+                    result = temperatureValueFloat;
+                    break;
+            };
+
+            output.innerHTML = "The temperature in " + to.options[to.selectedIndex].text + " is " + result + ".";
+        } else {
+            output.textContent = "";
+        }
+    }
+</script>
+</body>
+</html>
