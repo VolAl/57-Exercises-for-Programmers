@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Blood Alcohol Calculator App</string>
+    <string name="units_text">Would you like to use metric or imperial units?</string>
+    <string name="metric_units">Metric</string>
+    <string name="imperial_units">Imperial</string>
+    <string name="country_text">In which State/Country are you?</string>
+    <string name="weight_text">How much do you weigh?</string>
+    <string name="gender_text">What is your gender?</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="drinks_name_text">What is the name of the drink?</string>
+    <string name="drinks_volume_text">What is the amount of alcohol by volume of the drinks consumed?</string>
+    <string name="hours_since_last_drink_text">How many hours have passed since the last drink?</string>
+    <string name="output_text" />
+    <string name="add_drink_button_text">Add drink</string>
+</resources>
