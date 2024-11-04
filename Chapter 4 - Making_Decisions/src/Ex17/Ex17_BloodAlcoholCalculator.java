@@ -28,11 +28,11 @@ public class Ex17_BloodAlcoholCalculator {
                 units = sc.next();
             }
 
-            System.out.print("In which state/ country are you from? ");
+            System.out.print("In which State/Country are you? ");
             String country = sc.next();
             BigDecimal legalBacForDriving = LEGAL_BAC_FOR_DRIVING_PER_COUNTRY.containsKey(country) ?
                     LEGAL_BAC_FOR_DRIVING_PER_COUNTRY.get(country) : LEGAL_BAC_FOR_DRIVING_PER_COUNTRY.get("Default");
-            System.out.print("What is yor weight? ");
+            System.out.print("How much do you weigh? ");
             BigDecimal weight = sc.nextBigDecimal();
             System.out.print("What is your gender? (M/F): ");
             String gender = sc.next();
