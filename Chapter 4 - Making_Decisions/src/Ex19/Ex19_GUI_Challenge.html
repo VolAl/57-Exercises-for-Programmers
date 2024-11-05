@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .slide_container {
+      width: 100%;
+    }
+
+    .slider {
+      -webkit-appearance: none;
+      width: 35%;
+      height: 25px;
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+    }
+
+    .slider:hover {
+      opacity: 1;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      background: #04AA6D;
+      cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      background: #04AA6D;
+      cursor: pointer;
+    }
+
+    .bmi_ideal {
+      color: green;
+    }
+
+    .bmi_under {
+      color: orange;
+    }
+
+    .bmi_over {
+      color: red;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>GUI Challenge</title>
+</head>
+<body>
+<h1>BMI Calculator</h1>
+
+<label>
+    Please select which measurement unit would you like to use:
+    <div id="measurement_units">
+        <label>
+            Metric
+            <input type="radio" value="metric" name="measurement_units" id="metric">
+        </label>
+        <label>
+            Imperial
+            <input type="radio" value="imperial" name="measurement_units" id="imperial">
+        </label>
+    </div>
+</label>
+
+<br>
+<div id="slide_group" style="display: none;">
+    <label>
+        Please use this slider to enter your weight in <span id="weight_units"></span>:
+        <div class="slide_container">
+            <input type="range" min="1" max="500" step="0.01" value="1" class="slider" id="weight">
+            <p id="weight_value"></p>
+        </div>
+    </label>
+    <label>
+        Please use this slider to enter your height in <span id="height_units"></span>:
+        <div class="slide_container">
+            <input type="range" min="1" max="250" step="0.01" value="1" class="slider" id="height">
+            <p id="height_value"></p>
+        </div>
+    </label>
+</div>
+
+<p id="output"></p>
+
+<script>
+    let unit;
+    let metric = document.getElementById('metric');
+    let imperial = document.getElementById('imperial');
+    let weight = document.getElementById('weight');
+    let weight_value = document.getElementById('weight_value');
+    let weight_units = document.getElementById('weight_units');
+    weight_value.innerHTML = "";
+    let height = document.getElementById('height');
+    let height_value = document.getElementById('height_value');
+    let height_units = document.getElementById('height_units');
+    height_value.innerHTML = "";
+    let output = document.getElementById('output');
+
+    metric.addEventListener('click', function () {
+        unit = metric;
+        weight_units.innerHTML = "kilograms";
+        height_units.innerHTML = "centimeters";
+        showSliderGroup()
+        printResult();
+    });
+
+    imperial.addEventListener('click', function () {
+        unit = imperial;
+        weight_units.innerHTML = "pounds";
+        height_units.innerHTML = "feet and inches";
+        showSliderGroup()
+        printResult();
+    });
+
+    weight.addEventListener('input', function () {
+        weight_value.innerHTML = this.value;
+        printResult();
+    });
+
+    height.addEventListener('input', function () {
+        height_value.innerHTML = this.value;
+        printResult();
+    });
+
+    function showSliderGroup() {
+      var slide_group = document.getElementById("slide_group");
+      if (slide_group.style.display === "none") {
+        slide_group.style.display = "block";
+      }
+    }
+
+    function printResult() {
+        let unitValue = unit.value;
+        let weightValue = weight.value;
+        let heightValue = height.value;
+        if (unitValue == "imperial") {
+            const feetInches = heightValue.split(".");
+            let feet = parseInt(feetInches[0]);
+            let inches = parseInt(feetInches[1]);
+            heightValue = (feet * 12) + inches;
+        } else {
+            heightValue = heightValue / 100;
+        }
+
+        if(weightValue > 1 && heightValue > (unitValue == "imperial" ? 1 : 0.01)) {
+
+            let bmi;
+            if (unitValue == "imperial") {
+                bmi = (weightValue / (heightValue * heightValue)) * 703;
+            } else {
+                bmi = (weightValue / heightValue) / heightValue;
+            }
+
+            output.innerHTML = "Your BMI is " + bmi.toFixed(2) + ".<br>You are "
+                                + (bmi >= 18.5 && bmi <= 25 ? "<span class='bmi_ideal'>within the ideal weight range.</span>" :
+                                        (bmi < 18.5 ? "<span class='bmi_under'>underweight</span>" :
+                                        ( bmi > 25 ? "<span class='bmi_over'>overweight</span>" : ""))
+                                        + ". You should see your doctor.");
+        } else {
+            output.textContent = "";
+        }
+    }
+</script>
+</body>
+</html>
