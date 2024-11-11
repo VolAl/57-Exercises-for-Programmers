@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .very_weak {
+      color: red;
+    }
+
+    .weak {
+      color: orange;
+    }
+
+    .strong {
+      color: green;
+    }
+
+    .very_strong {
+      color: DarkGreen;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>GUI Challenge</title>
+</head>
+<body>
+<h1>Password Strength Indicator</h1>
+
+<h2>Please enter a password to validate:</h2>
+
+<label>
+    Password:
+    <input type="text" id="password">
+</label>
+
+<p id="output"></p>
+
+<script>
+    let password = document.getElementById('password');
+    let output = document.getElementById('output');
+
+    password.addEventListener('input', function () {
+        validatePasswordWithStrength();
+    });
+
+    function validatePasswordWithStrength() {
+        let passwordValue = password.value;
+
+        let containsOnlyNumbersPattern = '^\\d*$';
+        let containsOnlyLettersPattern = '^[a-zäöüßA-ZÄÖÜ]*$';
+        let containsLettersNumberPattern = '^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$';
+        let containsLettersNumbersSpecialCharsPattern = '^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!-\\/:-@\\[-`{-~])([a-zA-Z0-9!-\\/:-@\\[-`{-~]+)$';
+
+        if(passwordValue != "") {
+
+            let result = 0;
+            if(passwordValue.length < 8) {
+                if(passwordValue.match(containsOnlyNumbersPattern) != null) {
+                    result = 0; // "very weak"
+                } else if(passwordValue.match(containsOnlyLettersPattern) != null) {
+                    result = 1; // "weak"
+                }
+            } else if(passwordValue.match(containsLettersNumberPattern) != null) {
+                result = 2; // "strong"
+            } else if (passwordValue.match(containsLettersNumbersSpecialCharsPattern) != null) {
+                result = 3; // "very strong"
+            }
+
+            output.innerHTML = "The password " + passwordValue + " is a "
+                                + (result == 0 ? "<span class='very_weak'>very weak</span>" :
+                                        (result == 1 ? "<span class='weak'>weak</span>" :
+                                        ( result == 2 ? "<span class='strong'>strong</span>" :
+                                        ( result == 3 ? "<span class='very_strong'>very strong</span>" : ""))))
+                                        + " password.";
+        } else {
+            output.textContent = "";
+        }
+    }
+</script>
+</body>
+</html>

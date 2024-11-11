@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static java.lang.System.in;
 
-public class Ex25_AnagramChecker {
+public class Ex24_AnagramChecker {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(in);
