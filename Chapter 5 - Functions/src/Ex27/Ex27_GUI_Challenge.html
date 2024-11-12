@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .validation-error {
+      color: red;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>GUI Challenge</title>
+</head>
+<body>
+<h1>Input Validator</h1>
+
+<h2>Please enter the required fields:</h2>
+
+<label>
+    First Name:
+    <input type="text" id="first_name">
+</label>
+<br>
+<label>
+    Last Name:
+    <input type="text" id="last_name">
+</label>
+<br>
+<label>
+    ZIP Code:
+    <input type="text" id="zip_code">
+</label>
+<br>
+<label>
+    Employee ID:
+    <input type="text" id="employee_id">
+</label>
+
+<p id="output"></p>
+
+<script>
+    let firstName = document.getElementById('first_name');
+    let lastName = document.getElementById('last_name');
+    let zipCode = document.getElementById('zip_code');
+    let employeeId = document.getElementById('employee_id');
+    let output = document.getElementById('output');
+
+    validateInput();
+
+    firstName.addEventListener('input', function () {
+        validateInput();
+    });
+
+    lastName.addEventListener('input', function () {
+        validateInput();
+    });
+
+    zipCode.addEventListener('input', function () {
+        validateInput();
+    });
+
+    employeeId.addEventListener('input', function () {
+        validateInput();
+    });
+
+    function validateInput() {
+        let validationMessages = "";
+
+        validationMessages += validateInputName(firstName.value, 'first');
+        validationMessages += validateInputName(lastName.value, 'last');
+        validationMessages += validateZipCodeMustBeNumeric(zipCode.value);
+        validationMessages += validateFormatEmployeeID(employeeId.value);
+
+        if(validationMessages == "") {
+            validationMessages = "There were no errors found.";
+        }
+
+        output.innerHTML = validationMessages;
+    }
+
+    function validateInputName(input, inputName) {
+        if(input == "") {
+            return "<span class='validation-error'>The " + inputName + " name must be filled in.</span><br>";
+        } else if(input.length < 2) {
+            return "<span class='validation-error'>\"" + input + "\" is not a valid " + inputName + " name. It is too short.</span><br>";
+        }
+        return "";
+    }
+
+    function validateZipCodeMustBeNumeric(input) {
+        let containsOnlyNumbersPattern = '^\\d*$';
+        if(input == "" || input.match(containsOnlyNumbersPattern) == null) {
+            return "<span class='validation-error'>The ZIP code must be numeric.</span><br>";
+        }
+        return "";
+    }
+
+    function validateFormatEmployeeID(input) {
+        let employeeIDFormatPattern = '^([a-zA-Z]){2}-(\\d){4}$';
+        if(input.match(employeeIDFormatPattern) == null) {
+            return "<span class='validation-error'>" + input + " is not a valid ID.</span><br>";
+        }
+        return "";
+    }
+</script>
+</body>
+</html>
