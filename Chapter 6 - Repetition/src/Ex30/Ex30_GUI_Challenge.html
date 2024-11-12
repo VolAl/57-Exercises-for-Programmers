@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GUI Challenge</title>
+</head>
+<body>
+<h1>Multiplication table</h1>
+
+<label for="base_number">Please select the base number:</label>
+<select name="base_number" id="base_number">
+    <option value="" selected disabled hidden>Select an Option</option>
+</select>
+<br>
+<p id="output"></p>
+
+<script>
+    let baseNumberSelect = document.getElementById('base_number');
+    let output = document.getElementById('output');
+
+    baseNumberSelectAddOptions();
+
+    function baseNumberSelectAddOptions() {
+        for(var i=0; i<=12; i++) {
+            var option = document.createElement("option");
+            option.text = i;
+            option.value = i;
+            baseNumberSelect.add(option);
+        }
+    }
+
+    baseNumberSelect.addEventListener('change', function () {
+        printMultiplicationTable(this.value);
+    });
+
+    function printMultiplicationTable(selectedNumber) {
+        output.innerHTML = "";
+        let result = "<center><table border='1px'>";
+        for (var i = -1; i <= selectedNumber; i++) {
+          result += "<tr style='height:40px'>";
+          for (var j = -1; j <= selectedNumber; j++) {
+            result += "<td style='width:40px'><center><font size='4'>";
+            if(i==-1 && j==-1) {
+                result += " ";
+            } else {
+                result += ((i * j) < 0 ? -(i * j) : (i * j));
+            }
+            result += "</center></font></td>";
+          }
+          result += "</tr>";
+        }
+        result += "</table></center>";
+        output.innerHTML = result;
+    }
+</script>
+</body>
+</html>
