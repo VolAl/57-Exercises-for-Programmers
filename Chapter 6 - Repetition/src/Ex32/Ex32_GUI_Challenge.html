@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .button {
+      display: inline-block;
+      padding: 15px 25px;
+      margin: 15px 25px;
+      font-size: 15px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      outline: none;
+      color: #fff;
+      background-color: #04AA6D;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 9px #999;
+    }
+
+    .button:hover {
+      background-color: #3e8e41
+    }
+
+    .button:active {
+      background-color: #3e8e41;
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>GUI Challenge</title>
+</head>
+<body>
+<h1>Guess the number game</h1>
+
+<label for="difficulty_level">Please select the level:</label>
+<select name="difficulty_level" id="difficulty_level">
+    <option value="" selected disabled hidden>Select an Option</option>
+</select>
+<br>
+
+<div id="grid_container" class="grid-container" style="display: none;">
+</div>
+
+<p id="output"></p>
+
+<script>
+    let difficultyLevelSelect = document.getElementById('difficulty_level');
+    let gridContainer = document.getElementById('grid_container');
+    let output = document.getElementById('output');
+    let numberToGuess;
+    let countGuesses = 1;
+
+    difficultyLevelSelectAddOptions();
+
+    function difficultyLevelSelectAddOptions() {
+        for(var i=1; i<=3; i++) {
+            var option = document.createElement("option");
+            option.text = i;
+            option.value = i;
+            difficultyLevelSelect.add(option);
+        }
+    }
+
+    difficultyLevelSelect.addEventListener('change', function () {
+        showGridContainer(this.value);
+    });
+
+    function showGridContainer(difficultyLevelSelect) {
+      if (gridContainer.style.display === "none") {
+        gridContainer.style.display = "block";
+      }
+      gridContainerAddNumbers(difficultyLevelSelect);
+    }
+
+    function gridContainerAddNumbers(difficultyLevelSelect) {
+        gridContainer.innerHTML = "";
+        let maxNumber = difficultyLevelSelect == 1 ? 10 : difficultyLevelSelect == 2 ? 100 : 1000;
+        numberToGuess = Math.floor(Math.random() * (maxNumber) + 1);
+        for(var i=0; i<=maxNumber; i++) {
+            var _button = document.createElement("button");
+            _button.id = i;
+            _button.data = i;
+            _button.classList.add('button');
+            _button.classList.add('grid-item');
+            _button.innerHTML = i;
+            _button.onclick = function()
+            {
+                printResult(this);
+            }
+            gridContainer.appendChild(_button);
+        }
+    }
+
+    function printResult(button) {
+        let guess = button.id;
+        if(guess != numberToGuess) {
+            if(guess < numberToGuess) {
+                alert("Too low. Guess again.");
+            } else {
+                alert("Too high. Guess again.");
+            }
+            button.style.display = "none";
+            countGuesses++;
+        } else {
+            let message = "You got it in " + countGuesses + " guesses!"
+            if (countGuesses == 1) {
+                message += "\nYou are a mind reader!";
+            } else if (countGuesses >= 2 && countGuesses <= 4) {
+                message += "\nMost impressive.";
+            } else if (countGuesses >= 5 && countGuesses <= 6) {
+                message += "\nYou can do better than that.";
+            } else if (countGuesses >= 7) {
+                message += "\nBetter luck next time.";
+            }
+
+            alert(message);
+            gridContainer.innerHTML = "";
+            difficultyLevelSelect.innerHTML = "";
+            var option = document.createElement("option");
+            option.text = "Select an Option";
+            option.value = "";
+            difficultyLevelSelect.add(option);
+            difficultyLevelSelectAddOptions();
+            countGuesses = 1;
+        }
+    }
+</script>
+</body>
+</html>
