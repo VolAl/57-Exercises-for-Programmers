@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .button {
+      display: inline-block;
+      padding: 10px 10px;
+      font-size: 20px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      outline: none;
+      color: #fff;
+      background-color: #04AA6D;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 9px #999;
+      margin-left: 60px;
+      margin-top: 10px;
+    }
+
+    .button:hover {
+        background-color: #3e8e41;
+    }
+
+    .button:active {
+      background-color: #3e8e41;
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
+    }
+
+    #circle {
+      font-size: 14pt;
+      background-color: black;
+      color: black;
+      position: absolute;
+      margin-left: 30px;
+      margin-top: 30px;
+      height: 150px;
+      width: 150px;
+      border-radius: 50%;
+    }
+
+    #answer {
+        background-color: white;
+        color: black;
+        position: absolute;
+        text-align: center;
+        align-content: center;
+        border-radius: 50%;
+        margin-left: 25px;
+        margin-top: 25px;
+        height: 95px;
+        width: 95px;
+        font-size: 20px;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>GUI Challenge</title>
+</head>
+<body>
+<h1>Magic 8 Ball</h1>
+
+<label>
+    What is your question?
+    <input type="text">
+</label>
+<div id="answerButton">
+    <button class="button" type="button" id="magic_8_ball_button">Shake It</button>
+</div>
+<br>
+<div id="magicEightBall">
+    <div id="circle">
+        <p id="answer"></p>
+    </div>
+</div>
+
+<script>
+    let possibleAnswers = ["Yes", "No", "Maybe", "Ask again later"];
+    let btn = document.getElementById('magic_8_ball_button');
+    let answer = document.getElementById('answer');
+
+    btn.addEventListener('click', function () {
+        answer.innerHTML = possibleAnswers[Math.floor(Math.random() * 4)];
+    });
+
+</script>
+</body>
+</html>
