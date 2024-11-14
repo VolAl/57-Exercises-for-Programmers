@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      transition: 0.3s;
+      width: 5%;
+      border-radius: 5px;
+      display: ruby;
+      flex-wrap: wrap;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+
+    .card-item {
+      height: 150px;
+      width: 150px;
+      padding: 30px;
+    }
+
+    .button {
+      padding: 15px;
+      border-radius: 10px;
+      margin: 30px;
+    }
+
+    .button1 {
+      background-color: white;
+      color: black;
+      border: 2px solid #008CBA;
+    }
+
+    .button1:hover {
+      background-color: #008CBA;
+      color: white;
+    }
+
+    .button2 {
+      background-color: white;
+      color: black;
+      border: 2px solid #04AA6D;
+    }
+
+    .button2:hover {
+      background-color: #04AA6D;
+      color: white;
+    }
+
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>GUI Challenge</title>
+</head>
+<body>
+<h1>Win the Contest!</h1>
+
+<label>
+    Enter your name:
+    <input type="text" id="contestant_name">
+</label>
+<div id="buttons">
+    <button class="button button1" type="button" id="register_button">Register</button>
+    <button class="button button2" type="button" id="show_winner">Show winner</button>
+</div>
+<br>
+<div id="contestants_list" class="card"></div>
+<p id="winner"></p>
+
+<script>
+    let contestants = [];
+    let contestantIndex = 0;
+    let registerButton = document.getElementById('register_button');
+    let showWinnerButton = document.getElementById('show_winner');
+    let contestantsList = document.getElementById('contestants_list');
+
+    registerButton.addEventListener('click', function () {
+        let contestantNameValue = document.getElementById('contestant_name').value;
+        if(contestantNameValue != '') {
+            if(!contestants.includes(contestantNameValue)) {
+                contestants[contestantIndex] = contestantNameValue;
+
+                let avatarId = contestantNameValue;
+                let avatarSvg = '';
+                fetch('https://api.multiavatar.com/'
+                +JSON.stringify(avatarId))
+                  .then(res => res.text())
+                  .then(svg => {
+                        var contestant = document.createElement("div");
+                        contestant.id = contestantNameValue;
+                        contestant.classList.add('card-item');
+
+                        var contestantAvatar = document.createElement("div");
+                        contestantAvatar.innerHTML = svg;
+                        contestant.appendChild(contestantAvatar);
+
+                        var contestantName = document.createElement("span");
+                        contestantName.innerHTML = contestantNameValue;
+                        contestant.appendChild(contestantName);
+
+                        contestantsList.appendChild(contestant);
+
+                        contestantIndex++;
+                    });
+            } else {
+                alert("You are already registered!");
+            }
+        }
+    });
+
+    showWinnerButton.addEventListener('click', function () {
+        console.log(contestants);
+        let currentIndex = contestants.length;
+
+        // While there remain elements to shuffle...
+        while (currentIndex != 0) {
+
+            // Pick a remaining element...
+            let randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [contestants[currentIndex], contestants[randomIndex]] = [
+            contestants[randomIndex], contestants[currentIndex]];
+        }
+
+        // Shuffled contestants
+        console.log(contestants);
+
+        let winner = contestants[Math.floor(Math.random() * contestants.length)];
+        alert("The winner is... " + winner);
+
+        let contestantWinner = document.getElementById(winner);
+        contestantsList.removeChild(contestantWinner);
+
+        contestants = contestants.filter(function(item) {
+            return item !== winner;
+        });
+
+        if(contestants.length == 0) {
+            contestants = [];
+            contestantIndex = 0;
+        }
+    });
+
+</script>
+</body>
+</html>
