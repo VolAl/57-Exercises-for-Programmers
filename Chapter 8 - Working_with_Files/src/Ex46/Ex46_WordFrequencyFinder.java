@@ -1,88 +1,71 @@
-package Ex45;
+package Ex46;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang3.StringUtils;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
 
-import java.io.*;
+import javax.swing.*;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static java.lang.System.in;
-
-public class Ex45_WordFinder {
-
-    private static Map<String, String> configWordsMapping = new HashMap<>();
-    private static final Map<String, Integer> wordsReplacementOccurrences = new HashMap<>();
+public class Ex46_WordFrequencyFinder {
 
     public static void main(String[] args) {
 
-        String dataReplaced = "";
+        Path path = Paths.get("words.txt");
+
         try {
-            ObjectMapper objMapper = new ObjectMapper();
-            configWordsMapping = objMapper.readValue(new File("config/config.json"), new TypeReference<>() {
-            });
+            String input = Files.readAllLines(path).toString();
 
-            dataReplaced = findBadWordsInFiles();
-        } catch (FileNotFoundException e) {
-           System.out.println("An error occurred." +e.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            Map<String, Integer> wordOccurrences = Pattern.compile("\\W+")
+                    .splitAsStream(input)
+                    .filter(word -> !word.isEmpty())
+                    .collect(Collectors.groupingBy(String::toLowerCase,
+                            Collectors.summingInt(s -> 1)));
 
-        Scanner sc = new Scanner(in);
-        System.out.print("Which is the name of the output file? ");
-        String outputFileName = sc.nextLine();
-        try {
-            FileWriter myWriter = new FileWriter(outputFileName);
-            myWriter.write(dataReplaced);
-            myWriter.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            LinkedHashMap<String, Integer> wordOccurrencesSorted = wordOccurrences.entrySet()
+                    .stream()
+                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            Map.Entry::getValue,
+                            (oldValue, newValue) -> oldValue, LinkedHashMap::new));
 
-        for(Map.Entry<String, Integer> entry : wordsReplacementOccurrences.entrySet()) {
-            System.out.println("The word " + entry.getKey() + " has been substituted " + entry.getValue() + " times.");
-        }
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-    }
-
-    private static String findBadWordsInFiles() throws IOException {
-
-        Set<String> fileList = listFilesUsingFilesList("inputFiles");
-        StringBuilder dataReplaced = new StringBuilder();
-        for(String s : fileList) {
-            Scanner myReader = new Scanner(new File("inputFiles/" + s));
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                for (Map.Entry<String, String> entry : configWordsMapping.entrySet()) {
-                    String wordToSubstitute = entry.getValue();
-                    if (data.contains(wordToSubstitute)) {
-                        wordsReplacementOccurrences.put(wordToSubstitute, StringUtils.countMatches(data, wordToSubstitute));
-                        dataReplaced.append(data.replaceAll(wordToSubstitute, entry.getKey())).append(System.lineSeparator());
-                    }
+            for (Map.Entry<String, Integer> entry : wordOccurrencesSorted.entrySet()) {
+                System.out.print(entry.getKey() + ": ");
+                for(int i=0; i< entry.getValue(); i++) {
+                    System.out.print("*");
                 }
+                System.out.println();
+
+                dataset.addValue(entry.getValue(), entry.getKey(), entry.getValue());
             }
-            myReader.close();
-        }
 
-        return dataReplaced.toString();
-    }
+            JFreeChart chart = ChartFactory.createBarChart(
+                    "Words Occurrences",
+                    "Word",
+                    "Occurrence",
+                    dataset);
 
-    public static Set<String> listFilesUsingFilesList(String dir) throws IOException {
-        try (Stream<Path> stream = Files.list(Paths.get(dir))) {
-            return stream
-                    .filter(file -> !Files.isDirectory(file))
-                    .map(Path::getFileName)
-                    .map(Path::toString)
-                    .collect(Collectors.toSet());
+            ChartPanel chartPanel = new ChartPanel(chart);
+            JFrame frame = new JFrame();
+            frame.setSize(700, 500);
+            frame.setContentPane(chartPanel);
+            frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setVisible(true);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
