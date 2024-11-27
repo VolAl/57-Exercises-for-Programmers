@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Flickr Photo Search App</string>
+    <string name="title" />
+    <string name="search_string_text">Write a tag name to search related photos:</string>
+    <string name="search_button_text">Search</string>
+</resources>
