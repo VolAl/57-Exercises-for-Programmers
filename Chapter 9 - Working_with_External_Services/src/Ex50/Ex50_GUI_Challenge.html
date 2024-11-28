@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>GUI Challenge</title>
+</head>
+<body>
+<h1>Movie Recommendations</h1>
+
+<label>
+    Enter the name of a movie:
+    <input type="text" id="movie_name">
+</label>
+<button class="button button1" type="button" id="search_button">Search</button>
+<br>
+<div id="movie_info"></div>
+
+<script>
+    let searchButton = document.getElementById('search_button');
+    let movieInfo = document.getElementById('movie_info');
+
+    let config;
+    fetch("config/config.json")
+      .then(response => response.json())
+      .then(json => config = json);
+
+    searchButton.addEventListener('click', function () {
+        movieInfo.innerHTML = '';
+
+        let movieName = document.getElementById('movie_name').value;
+        let movieNameForQuery = movieName.replaceAll(" ", "+");
+
+        apiKey = config["movie-api-key"];
+        movieApiUrl = config["movie-api-url"];
+        movieApiUrl = movieApiUrl.replace("%par1", movieNameForQuery).replace("%par2", apiKey);
+
+        fetch(movieApiUrl)
+          .then(res => res.text())
+          .then(results => {
+                var resultsJson = JSON.parse(results);
+                var movie = resultsJson.results.filter( r => r.original_title.toUpperCase() === movieName.toUpperCase());
+                if(movie.length == 0) {
+                    movieInfo.innerHTML = 'Sorry this movie is not in our database! Try again.';
+                } else {
+                    var movie_info = document.createElement("div");
+                    movie_info.id = movie[0].id;
+                    movie_info.innerHTML =
+                        '<img width="300" height="350" src="https://image.tmdb.org/t/p/original' + movie[0].poster_path + '"/>' +
+                        '<br>Title: ' + movie[0].original_title +
+                        '<br>Year: ' + movie[0].release_date.split("-")[0] +
+                        '<br>Rating: ' + (movie[0].adult ? 'R-18' : 'PG') +
+                        '<br>Average Vote: ' + movie[0].vote_average +
+                        '<br><br>Description: ' + movie[0].overview;
+                    movieInfo.appendChild(movie_info);
+                }
+            });
+    });
+
+</script>
+</body>
+</html>
