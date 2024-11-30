@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Pushing Notes App</string>
+    <string name="push_btn">Add a Note</string>
+    <string name="note_text">Push a note</string>
+    <string name="note_to_save_text">Write the note to save</string>
+    <string name="save">Save</string>
+    <string name="output_text" />
+    <string name="read_btn">Read</string>
+</resources>

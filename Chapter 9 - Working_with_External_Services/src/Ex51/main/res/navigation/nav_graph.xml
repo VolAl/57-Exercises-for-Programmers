@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/FragmentMain">
+
+    <fragment
+        android:id="@+id/FragmentMain"
+        android:name="com.pushingnotesapp.MainFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_main">
+
+        <action
+            android:id="@+id/action_FragmentMain_to_FragmentPushNote"
+            app:destination="@id/FragmentPushNote" />
+    </fragment>
+    <fragment
+        android:id="@+id/FragmentPushNote"
+        android:name="com.pushingnotesapp.FragmentPushNote"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_push_note">
+
+        <action
+            android:id="@+id/action_FragmentPushNote_to_FragmentMain"
+            app:destination="@id/FragmentMain" />
+    </fragment>
+</navigation>
