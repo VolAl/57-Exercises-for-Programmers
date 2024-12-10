@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/src/Ex48/config" />
       <excludeFolder url="file://$MODULE_DIR$/src/Ex49/FlickrPhotoSearchApp" />
       <excludeFolder url="file://$MODULE_DIR$/src/Ex50/config" />
+      <excludeFolder url="file://$MODULE_DIR$/src/Ex51" />
     </content>
     <orderEntry type="jdk" jdkName="openjdk-23" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -14,5 +15,7 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.17.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.17.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.17.2" level="project" />
+    <orderEntry type="library" name="springframework.boot.spring" level="project" />
+    <orderEntry type="library" name="springframework.boot.spring.autoconfigure" level="project" />
   </component>
 </module>
