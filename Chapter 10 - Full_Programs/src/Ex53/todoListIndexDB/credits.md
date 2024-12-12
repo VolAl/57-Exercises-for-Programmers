@@ -1,0 +1,1 @@
+This is a minimal solution based on the MDN guide: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API#examples
