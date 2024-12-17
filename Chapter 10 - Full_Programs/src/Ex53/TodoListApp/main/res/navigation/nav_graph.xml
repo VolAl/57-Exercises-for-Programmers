@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/FragmentMain">
+
+    <fragment
+        android:id="@+id/FragmentMain"
+        android:name="com.todolistapp.MainFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_main">
+
+        <action
+            android:id="@+id/action_FragmentMain_to_FragmentAddTask"
+            app:destination="@id/FragmentAddTask" />
+        <action
+            android:id="@+id/action_FragmentMain_to_FragmentCompleteTask"
+            app:destination="@id/FragmentCompleteTask" />
+    </fragment>
+    <fragment
+        android:id="@+id/FragmentAddTask"
+        android:name="com.todolistapp.FragmentAddTask"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_add_task">
+
+        <action
+            android:id="@+id/action_FragmentAddTask_to_FragmentMain"
+            app:destination="@id/FragmentMain" />
+    </fragment>
+    <fragment
+        android:id="@+id/FragmentCompleteTask"
+        android:name="com.todolistapp.FragmentCompleteTask"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_complete_task">
+
+        <action
+            android:id="@+id/action_FragmentAddTask_to_FragmentMain"
+            app:destination="@id/FragmentMain" />
+    </fragment>
+</navigation>

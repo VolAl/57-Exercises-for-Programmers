@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Todo List App</string>
+    <string name="add_task_btn">Add a task</string>
+    <string name="output_text" />
+    <string name="task_text">Add a task</string>
+    <string name="task_to_save_text" />
+    <string name="save">Save</string>
+    <string name="complete_task_text">Write the task ID to complete</string>
+    <string name="complete_task_btn">Complete a Task</string>
+</resources>
