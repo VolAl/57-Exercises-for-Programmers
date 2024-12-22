@@ -1,0 +1,15 @@
+<main class="main">
+  <div class="content">
+    <form [formGroup]="urlForm" (ngSubmit)="submit()" >
+      <input type="text" name="longUrl" placeholder="url" formControlName="longUrl">
+      <br/>
+      <button type="submit" [disabled]="urlForm.invalid">Send</button>
+    </form>
+  </div>
+
+  <div>
+    {{ shortUrl }}
+  </div>
+</main>
+
+<router-outlet />
