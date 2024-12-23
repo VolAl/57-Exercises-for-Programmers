@@ -3,6 +3,7 @@ package com.url_shortener.controller;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.url_shortener.model.UrlDao;
+import com.url_shortener.service.IUrlDao;
 import com.url_shortener.service.UrlShortenerService;
 import com.url_shortener.util.URLValidator;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,6 +22,8 @@ public class UrlShortenerController {
 
     @Autowired
     private UrlShortenerService urlShortenerService;
+    @Autowired
+    private IUrlDao iUrlDao;
 
     @RequestMapping(value = "/shortener",
             method=RequestMethod.POST,
@@ -43,6 +46,17 @@ public class UrlShortenerController {
         String longUrl = urlShortenerService.shortUrlToLongUrl(id);
         response.sendRedirect(longUrl);
         return "{\"longUrl\": \"" + longUrl + "\"}";
+    }
+
+    @RequestMapping(value = "/{id}/stats",
+            method=RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String shortUrlStats(@PathVariable String id) {
+        UrlDao urlDao = iUrlDao.getOneUrl(Integer.parseInt(id));
+        return "{\"longUrl\": \"" + urlDao.getLongUrl()
+               + "\", \"shortUrl\": \"" + urlDao.getShortUrl()
+               + "\", \"timesShortUrlHasBeenAccessed\": \"" + urlDao.getShortUrlStats().getTimesUrlHasBeenAccessed() + "\"}";
     }
 }
 

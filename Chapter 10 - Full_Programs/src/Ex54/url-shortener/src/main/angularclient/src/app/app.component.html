@@ -1,14 +1,22 @@
 <main class="main">
-  <div class="content">
-    <form [formGroup]="urlForm" (ngSubmit)="submit()" >
-      <input type="text" name="longUrl" placeholder="url" formControlName="longUrl">
-      <br/>
-      <button type="submit" [disabled]="urlForm.invalid">Send</button>
-    </form>
-  </div>
+  <div *ngIf="shortUrlStats.longUrl == ''">
+    <div class="content">
+      <form [formGroup]="urlForm" (ngSubmit)="submit()" >
+        <input type="text" name="longUrl" placeholder="url" formControlName="longUrl">
+        <br/>
+        <button type="submit" [disabled]="urlForm.invalid">Send</button>
+      </form>
+    </div>
 
-  <div>
-    {{ shortUrl }}
+    <div *ngIf="shortUrl != ''">
+      {{ shortUrl }}
+      <button (click)="showShortUrlStats()">Show Short Url stats</button>
+    </div>
+  </div>
+  <div *ngIf="shortUrlStats.longUrl != ''">
+    <p><b>Long URL:</b> {{ shortUrlStats.longUrl }}</p>
+    <p><b>Short URL:</b> {{ shortUrlStats.shortUrl }}</p>
+    <p><b>Times Short URL has been visited:</b> {{ shortUrlStats.timesShortUrlHasBeenAccessed }}</p>
   </div>
 </main>
 
