@@ -1,0 +1,11 @@
+<div>
+  <form [formGroup]="textForm" (ngSubmit)="submit()" >
+    <input type="text" name="textArea" placeholder="Insert text here..." formControlName="text"
+           width="170px" height="100px">
+    <br/>
+    <button type="submit" [disabled]="textForm.invalid">Save</button>
+  </form>
+  <div *ngIf="textUrl != ''">
+    <a [routerLink]="[ 'text-view', hashedId ]" >{{ textUrl }}</a>
+  </div>
+</div>
