@@ -13,9 +13,9 @@ export class TextSharingService {
     this.textSharingServiceUrl = 'http://localhost:8080/text-sharing/';
   }
 
-  public saveText(textDao: any): Observable<any> {
+  public saveOrUpdateText(textDao: any): Observable<any> {
     const headers = { 'content-type': 'application/json'}
-    const body = { 'textIdHash': '', 'text': textDao.text, 'textUrl': textDao.textUrl };
+    const body = { 'textIdHash': textDao.textIdHash, 'textList': textDao.textList, 'textUrl': textDao.textUrl };
     return this.http.post<any>(this.textSharingServiceUrl + "save", body, {'headers':headers});
   }
 

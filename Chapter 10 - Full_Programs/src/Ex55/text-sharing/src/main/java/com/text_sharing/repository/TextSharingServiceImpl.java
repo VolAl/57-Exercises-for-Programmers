@@ -16,13 +16,12 @@ public class TextSharingServiceImpl implements TextSharingService {
     private ITextDao iTextDao;
 
     @Override
-    public String saveText(TextDao textDao) {
-        Map<String, TextDao> allUrls = iTextDao.getAllTexts();
+    public String saveOrUpdateText(TextDao textDao) {
+        Map<String, TextDao> allTexts = iTextDao.getAllTexts();
         int textIndex = 0;
         String textUrl = "";
-        for(TextDao t : allUrls.values()) {
-            if(t.getText().equals(textDao.getText())) {
-                textDao = t;
+        for(TextDao t : allTexts.values()) {
+            if(t.getTextUrl().equals(textDao.getTextUrl())) {
                 textUrl = t.getTextUrl();
                 break;
             }
@@ -30,9 +29,10 @@ public class TextSharingServiceImpl implements TextSharingService {
         }
 
         if(textUrl.isEmpty()) {
-            String md5Hex = DigestUtils.md5Hex(textDao.getText().replace(" ", "-") + "-" + textIndex).toUpperCase();
+            String textContent = textDao.getTextList().getFirst().getTextContent();
+            String md5Hex = DigestUtils.md5Hex(textContent.replace(" ", "-") + "-" + textIndex).toUpperCase();
             textUrl = "http://localhost:4200/text-view/" + md5Hex;
-            textDao = new TextDao(md5Hex, textDao.getText(), textUrl);
+            textDao = new TextDao(md5Hex, textDao.getTextList(), textUrl);
             iTextDao.saveText(textDao);
         } else {
             iTextDao.updateText(textDao);

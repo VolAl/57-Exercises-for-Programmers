@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface TextSharingService {
 
-    String saveText(TextDao textDao);
+    String saveOrUpdateText(TextDao textDao);
     TextDao getTextDao(String id);
 }

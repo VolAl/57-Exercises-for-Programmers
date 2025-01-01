@@ -13,7 +13,7 @@ import { EditorModule } from 'primeng/editor';
 })
 export class TextEditComponent implements OnInit {
 
-  textDao: any = { textIdHash: '', text: '', textUrl: ''};
+  textDao: any = { textIdHash: '', textList: [], textUrl: ''};
   textValue: string = '';
   textUrl: string = '';
   @Input()
@@ -30,10 +30,11 @@ export class TextEditComponent implements OnInit {
     if(this.hashedId != undefined && this.hashedId != '') {
       this.textSharingService.getTextDao(this.hashedId).subscribe(response => {
         this.textDao = response;
-        this.textValue = this.textDao.text;
+        this.textValue = this.textDao.textList[this.textDao.textList.length-1].textContent;
         this.textForm.patchValue({
           text: this.textValue
         });
+        this.textUrl = this.textDao.textUrl;
         console.log(response);
       });
     }
@@ -46,11 +47,20 @@ export class TextEditComponent implements OnInit {
 
     if(this.textForm.value.text != null) {
       this.textValue = this.textForm.value.text;
-      this.textDao.text = this.textForm.value.text;
+      if(this.textDao.textList.length <= 0) {
+        this.textDao.textList = [];
+      }
+      this.textDao.textList.push({ textId: this.textDao.textList.length, textContent: this.textForm.value.text });
     }
     console.log(this.textValue);
 
-    this.textSharingService.saveText(this.textDao).subscribe(data => {
+    if(this.hashedId != undefined && this.hashedId != '') {
+      this.textDao.textIdHash = this.hashedId;
+    } else {
+      this.textDao.textIdHash = '';
+    }
+
+    this.textSharingService.saveOrUpdateText(this.textDao).subscribe(data => {
           this.textUrl = data.textUrl;
           this.textDao.textUrl = data.textUrl;
           let textUrlParts = data.textUrl.split('/');

@@ -19,8 +19,8 @@ public class TextSharingController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String saveText(@RequestBody TextDao textJSon) {
-        String textUrl = textSharingService.saveText(textJSon);
+    public String saveOrUpdateText(@RequestBody TextDao textJSon) {
+        String textUrl = textSharingService.saveOrUpdateText(textJSon);
         return "{\"textUrl\": \"" + textUrl + "\"}";
     }
 

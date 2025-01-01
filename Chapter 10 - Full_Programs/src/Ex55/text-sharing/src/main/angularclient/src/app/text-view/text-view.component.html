@@ -1,4 +1,4 @@
 <div>
-  <div [innerHTML]="textDao.text"></div>
+  <div [innerHTML]="textDao.textList[textDao.textList.length-1].textContent"></div>
   <button (click)="editText()">Edit</button>
 </div>

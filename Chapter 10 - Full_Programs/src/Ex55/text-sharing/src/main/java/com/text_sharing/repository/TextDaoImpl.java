@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Repository
 public class TextDaoImpl implements ITextDao {
 
-    private final String hashReference= "TextShare";
+    private final String hashReference= "TextSharing";
 
     @Resource(name="redisTemplate")
     private HashOperations<String, String, TextDao> hashOperations;

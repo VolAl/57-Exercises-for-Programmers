@@ -12,7 +12,7 @@ export class TextViewComponent implements OnInit {
 
   @Input()
   hashedId: string = '';
-  textDao: any = { textIdHash: '', text: '', textUrl: ''};
+  textDao: any = { textIdHash: '', textList: [], textUrl: ''};
 
   constructor(private router: Router,
           public route: ActivatedRoute,

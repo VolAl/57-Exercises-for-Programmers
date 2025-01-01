@@ -3,17 +3,18 @@ package com.text_sharing.model;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class TextDao implements Serializable {
 
     private String textIdHash;
-    private String text;
+    private List<TextElement> textList;
     private String textUrl;
 
-    public TextDao(String textIdHash, String text, String textUrl) {
+    public TextDao(String textIdHash, List<TextElement> textList, String textUrl) {
         this.textIdHash = textIdHash;
-        this.text = text;
+        this.textList = textList;
         this.textUrl = textUrl;
     }
 
@@ -25,12 +26,12 @@ public class TextDao implements Serializable {
         this.textIdHash = textIdHash;
     }
 
-    public String getText() {
-        return text;
+    public List<TextElement> getTextList() {
+        return textList;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTextList(List<TextElement> textList) {
+        this.textList = textList;
     }
 
     public String getTextUrl() {
