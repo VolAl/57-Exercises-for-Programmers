@@ -1,9 +1,7 @@
 package com.text_sharing.controller;
 
-import com.google.gson.JsonObject;
 import com.text_sharing.model.TextDao;
 import com.text_sharing.service.TextSharingService;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -21,7 +19,7 @@ public class TextSharingController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String saveText(@RequestBody TextDao textJSon) throws Exception {
+    public String saveText(@RequestBody TextDao textJSon) {
         String textUrl = textSharingService.saveText(textJSon);
         return "{\"textUrl\": \"" + textUrl + "\"}";
     }
@@ -30,8 +28,7 @@ public class TextSharingController {
             method=RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String getText(@PathVariable String hashedId) {
-        String text = textSharingService.getText(hashedId);
-        return "{\"text\": \"" + text + "\"}";
+    public TextDao getTextDao(@PathVariable String hashedId) {
+        return textSharingService.getTextDao(hashedId);
     }
 }

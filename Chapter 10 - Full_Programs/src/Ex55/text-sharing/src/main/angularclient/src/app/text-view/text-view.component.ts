@@ -12,7 +12,7 @@ export class TextViewComponent implements OnInit {
 
   @Input()
   hashedId: string = '';
-  textValue: string = '';
+  textDao: any = { textIdHash: '', text: '', textUrl: ''};
 
   constructor(private router: Router,
           public route: ActivatedRoute,
@@ -20,8 +20,8 @@ export class TextViewComponent implements OnInit {
       }
 
   ngOnInit() {
-    this.textSharingService.getText(this.hashedId).subscribe(response => {
-      this.textValue = response.text;
+    this.textSharingService.getTextDao(this.hashedId).subscribe(response => {
+      this.textDao = response;
       console.log(response);
     });
   }

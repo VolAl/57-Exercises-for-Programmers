@@ -41,7 +41,7 @@ public class TextSharingServiceImpl implements TextSharingService {
     }
 
     @Override
-    public String getText(String id) {
-        return iTextDao.getOneText(id).getText();
+    public TextDao getTextDao(String id) {
+        return iTextDao.getOneText(id);
     }
 }

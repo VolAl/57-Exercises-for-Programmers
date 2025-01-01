@@ -1,12 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TextSharingService } from '../service/text-sharing.service';
+import { EditorModule } from 'primeng/editor';
 
 @Component({
   selector: 'app-text-edit',
-  imports: [RouterModule, ReactiveFormsModule, CommonModule],
+  imports: [RouterModule, ReactiveFormsModule, CommonModule, EditorModule],
   templateUrl: './text-edit.component.html',
   styleUrl: './text-edit.component.css'
 })
@@ -22,16 +23,16 @@ export class TextEditComponent implements OnInit {
     text: new FormControl('', Validators.required),
   });
 
-  constructor(private textSharingService: TextSharingService) {
+  constructor(private router: Router, private textSharingService: TextSharingService) {
     }
 
   ngOnInit() {
     if(this.hashedId != undefined && this.hashedId != '') {
-      this.textSharingService.getText(this.hashedId).subscribe(response => {
-        this.textValue = response.text;
-        this.textDao.text = response.text;
+      this.textSharingService.getTextDao(this.hashedId).subscribe(response => {
+        this.textDao = response;
+        this.textValue = this.textDao.text;
         this.textForm.patchValue({
-          text: response.text
+          text: this.textValue
         });
         console.log(response);
       });
@@ -56,6 +57,11 @@ export class TextEditComponent implements OnInit {
           this.hashedId = textUrlParts[textUrlParts.length - 1];
           console.log(data);
         });
+  }
+
+  onUrlClick(event :Event){
+      event.preventDefault();
+      this.router.navigate(['text-view', this.hashedId]);
   }
 
 }

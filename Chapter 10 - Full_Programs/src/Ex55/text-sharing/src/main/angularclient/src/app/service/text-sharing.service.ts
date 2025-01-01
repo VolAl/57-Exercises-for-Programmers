@@ -19,7 +19,7 @@ export class TextSharingService {
     return this.http.post<any>(this.textSharingServiceUrl + "save", body, {'headers':headers});
   }
 
-  public getText(textIndex: string): Observable<any> {
+  public getTextDao(textIndex: string): Observable<any> {
     return this.http.get(this.textSharingServiceUrl + textIndex);
   }
 }
