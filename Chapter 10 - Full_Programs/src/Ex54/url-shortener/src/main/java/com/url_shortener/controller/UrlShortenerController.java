@@ -10,26 +10,16 @@ import com.url_shortener.util.URLValidator;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.general.SeriesException;
 import org.jfree.data.time.*;
-import org.jfree.data.xy.XYDataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
-import java.awt.*;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
