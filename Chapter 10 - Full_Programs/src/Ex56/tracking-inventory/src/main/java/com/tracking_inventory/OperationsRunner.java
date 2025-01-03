@@ -7,10 +7,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 import static java.lang.System.in;
@@ -25,7 +22,7 @@ public class OperationsRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        if(isFileEmpty(file)) {
+        if(isFileEmpty()) {
             FileWriter myWriter = new FileWriter(file.getName());
             myWriter.write("[]");
             myWriter.close();
@@ -44,16 +41,23 @@ public class OperationsRunner implements CommandLineRunner {
             throw new RuntimeException(e);
         }
 
-        String message = "Welcome to your Inventory!\nWhat would you like to do?\n1) Add an item\n2) Search for an item\n3) Exit.";
+        String message = "Welcome";
         startInventory(message, items);
     }
 
     private static void startInventory(String message, List<ItemDao> items) {
-        System.out.println(message);
+        String messageToPrint = message + """
+                 to your Inventory!
+                What would you like to do?
+                1) Add an item
+                2) Search for an item
+                3) Print report in HTML / CSV
+                4) Exit.""";
+        System.out.println(messageToPrint);
         String answer = sc.nextLine();
 
-        while(!answer.equals("1") && !answer.equals("2") && !answer.equals("3")) {
-            System.out.print("Invalid answer, specify only 1, 2 or 3. Retry: ");
+        while(!answer.equals("1") && !answer.equals("2") && !answer.equals("3") && !answer.equals("4")) {
+            System.out.print("Invalid answer, specify only 1, 2, 3 or 4. Retry: ");
             answer = sc.nextLine();
         }
 
@@ -65,17 +69,108 @@ public class OperationsRunner implements CommandLineRunner {
                 searchItem(items);
                 break;
             case "3":
+                printReport(items);
+                break;
+            case "4":
                 System.out.println("See you next time!");
                 sc.close();
                 System.exit(0);
         }
     }
 
-    boolean isFileEmpty(File file) throws IOException {
-        if (!file.exists()) {
-            return file.createNewFile();
+    private static void printReport(List<ItemDao> items) {
+        System.out.println("""
+                Would you like to do print the report in:
+                1) HTML
+                2) CSV
+                3) Exit""");
+        String answer = sc.nextLine();
+
+        while(!answer.equals("1") && !answer.equals("2") && !answer.equals("3")) {
+            System.out.print("Invalid answer, specify only 1, 2 or 3. Retry: ");
+            answer = sc.nextLine();
         }
-        return file.length() == 0;
+
+        switch (answer) {
+            case "1":
+                printHtmlReport(items);
+                break;
+            case "2":
+                printCsvReport(items);
+                break;
+            case "3":
+                backToInventory(items);
+                break;
+        }
+    }
+
+    private static void backToInventory(List<ItemDao> items) {
+        String message = "Back ";
+        startInventory(message, items);
+    }
+
+    private static void printCsvReport(List<ItemDao> items) {
+        File csvOutputFile = new File("out/report.csv");
+        FileWriter writer;
+        try {
+            writer = new FileWriter(csvOutputFile.getName());
+            writer.write("Name,Serial Number,Value\n");
+
+            for(ItemDao item : items) {
+                writer.write(item.getName() + "," + item.getSerialNumber() + ",$" + item.getValue() + "\n" );
+            }
+            writer.close();
+
+            System.out.println("Report generated!");
+            backToInventory(items);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void printHtmlReport(List<ItemDao> items) {
+        File csvOutputFile = new File("out/report.html");
+        FileWriter writer;
+        try {
+            writer = new FileWriter(csvOutputFile.getName());
+            StringBuilder htmlString = new StringBuilder("""
+                    <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                  <th>Name</th>
+                                  <th>Serial Number</th>
+                                  <th>Value</th>
+                                </tr>
+                              </thead>
+                              <tbody>""");
+
+            for (ItemDao item : items) {
+                htmlString.append("<tr><td>").append(item.getName()).append("</td>");
+                htmlString.append("<td>").append(item.getSerialNumber()).append("</td>");
+                htmlString.append("<td>").append("$").append(item.getValue()).append("</td></tr>");
+            }
+
+            htmlString.append("""
+                            </tbody>
+                        </table>
+                    </div>
+                    """);
+            writer.write(htmlString.toString());
+            writer.close();
+
+            System.out.println("Report generated!");
+            backToInventory(items);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    boolean isFileEmpty() throws IOException {
+        if (!OperationsRunner.file.exists()) {
+            return OperationsRunner.file.createNewFile();
+        }
+        return OperationsRunner.file.length() == 0;
     }
 
     private static void searchItem(List<ItemDao> items) {
@@ -111,8 +206,7 @@ public class OperationsRunner implements CommandLineRunner {
                 throw new RuntimeException(e);
             }
         } else {
-            String message = "Back to your Inventory!\nWhat would you like to do?\n1) Add an item\n2) Search for an item\n3) Exit.";
-            startInventory(message, items);
+            backToInventory(items);
         }
     }
 
@@ -144,8 +238,7 @@ public class OperationsRunner implements CommandLineRunner {
         if(answer.equalsIgnoreCase("y")) {
             addNewItem(items);
         } else {
-            String message = "Back to your Inventory!\nWhat would you like to do?\n1) Add an item\n2) Search for an item\n3) Exit.";
-            startInventory(message, items);
+            backToInventory(items);
         }
     }
 
