@@ -1,0 +1,1 @@
+For the functionality of uploading the item's photo, I've adapted the code found at: https://www.tutorialspoint.com/swingexamples/show_file_chooser_images_only.htm

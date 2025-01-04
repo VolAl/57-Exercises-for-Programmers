@@ -18,10 +18,10 @@ public class ItemDao implements Serializable, Supplier<ItemDao> {
     private String name;
     private String serialNumber;
     private double value;
-    private Byte[] photo;
+    private byte[] photo;
 
     @JsonCreator
-    public ItemDao(@JsonProperty("id") String id, @JsonProperty("name") String name, @JsonProperty("serialNumber") String serialNumber, @JsonProperty("value") double value, @JsonProperty("photo") Byte[] photo) {
+    public ItemDao(@JsonProperty("id") String id, @JsonProperty("name") String name, @JsonProperty("serialNumber") String serialNumber, @JsonProperty("value") double value, @JsonProperty("photo") byte[] photo) {
         this.id = id;
         this.name = name;
         this.serialNumber = serialNumber;
@@ -32,5 +32,14 @@ public class ItemDao implements Serializable, Supplier<ItemDao> {
     @Override
     public ItemDao get() {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemDao{" +
+               "name='" + name + '\'' +
+               ", serialNumber='" + serialNumber + '\'' +
+               ", value= $" + value +
+               '}';
     }
 }

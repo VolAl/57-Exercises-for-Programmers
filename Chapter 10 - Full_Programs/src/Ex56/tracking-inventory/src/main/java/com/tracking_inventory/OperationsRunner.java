@@ -7,8 +7,12 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.*;
+import java.util.List;
 
 import static java.lang.System.in;
 
@@ -210,19 +214,33 @@ public class OperationsRunner implements CommandLineRunner {
         }
     }
 
+    private static ItemDao findItemByName(String itemName, List<ItemDao> items) {
+        return !items.isEmpty() ?
+                items.stream().filter(item -> item.getName().toUpperCase().contains(itemName.toUpperCase())).findFirst().orElseGet(new ItemDao("", "not_found","",0, null))
+                :
+                null;
+    }
+
     private static void addNewItem(List<ItemDao> items) {
         System.out.print("Enter the item's name: ");
         String name = sc.nextLine();
         System.out.print("Enter the item's serial number: ");
         String serialNumber = sc.nextLine();
         System.out.print("Enter the item's value: ");
-        double value = sc.nextDouble();
+        double value;
+        try {
+            value = sc.nextDouble();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         String md5 = DigestUtils.md5Hex(name.replace(" ", "-")).toUpperCase();
+        System.out.print("Enter the item's photo: ");
+        byte[] photo = uploadItemPhoto();
 
         //consume last line
         sc.nextLine();
 
-        items.add(new ItemDao(md5, name, serialNumber, value, null));
+        items.add(new ItemDao(md5, name, serialNumber, value, photo));
         try {
             objMapper.writeValue(file, items);
         } catch (IOException e) {
@@ -242,10 +260,43 @@ public class OperationsRunner implements CommandLineRunner {
         }
     }
 
-    private static ItemDao findItemByName(String itemName, List<ItemDao> items) {
-        return !items.isEmpty() ?
-                items.stream().filter(item -> item.getName().equalsIgnoreCase(itemName)).findFirst().orElseGet(new ItemDao("", "not_found","",0, null))
-                :
-                null;
+    private static byte[] uploadItemPhoto() {
+        JFrame frame = new JFrame();
+        frame.setAlwaysOnTop(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        byte[] photo = createUI(frame);
+        frame.setSize(560, 200);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(false);
+        frame.dispose();
+        return photo;
+    }
+
+    private static byte[] createUI(final JFrame frame){
+        JPanel panel = new JPanel();
+        LayoutManager layout = new FlowLayout();
+        panel.setLayout(layout);
+        final JLabel label = new JLabel();
+        final byte[][] fileContent = {null};
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.addChoosableFileFilter(new ImageFilter());
+        fileChooser.setAcceptAllFileFilterUsed(false);
+
+        int option = fileChooser.showOpenDialog(frame);
+        if(option == JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+            try {
+                fileContent[0] = Files.readAllBytes(file.toPath());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            label.setText("File Selected: " + file.getName());
+        }else{
+            label.setText("Open command canceled");
+        }
+        panel.add(label);
+        frame.getContentPane().add(panel, BorderLayout.CENTER);
+
+        return fileContent[0];
     }
 }
