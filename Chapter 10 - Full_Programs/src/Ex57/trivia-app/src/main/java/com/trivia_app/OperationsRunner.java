@@ -107,7 +107,7 @@ public class OperationsRunner implements CommandLineRunner {
         String level = sc.nextLine();
 
         TriviaElementDTO triviaElementDTO = new TriviaElementDTO((long) triviaElements.size(), question, rightAnswer, distractors, Integer.parseInt(level));
-        triviaAppService.saveOrUpdateTriviaElement((long) triviaElements.size(), triviaAppService.convertToEntity(triviaElementDTO));
+        triviaAppService.saveOrUpdateTriviaElement(triviaAppService.convertToEntity(triviaElementDTO));
         triviaElements = triviaAppService.getAllTriviaElements();
 
         System.out.println("Trivia Element added!\nBack to Admin Section.");
@@ -186,7 +186,7 @@ public class OperationsRunner implements CommandLineRunner {
                     break;
             }
 
-            triviaAppService.saveOrUpdateTriviaElement(triviaElement.getId(), triviaElement);
+            triviaAppService.saveOrUpdateTriviaElement(triviaElement);
 
             triviaElements = triviaAppService.getAllTriviaElements();
 

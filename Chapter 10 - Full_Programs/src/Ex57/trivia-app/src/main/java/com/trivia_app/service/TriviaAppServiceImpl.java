@@ -31,23 +31,9 @@ public class TriviaAppServiceImpl implements TriviaAppService {
     }
 
     @Override
-    public TriviaElementDTO saveOrUpdateTriviaElement(Long id, TriviaElement triviaElement) {
-        TriviaElement triviaElementToModify = new TriviaElement();
-        String action = "";
-        if(triviaElementRepository.existsById(id)) {
-            action = "U";
-            triviaElementToModify.setId(id);
-            triviaElementToModify.setQuestion(triviaElement.getQuestion());
-            triviaElementToModify.setRightAnswer(triviaElement.getRightAnswer());
-            triviaElementToModify.setDistractors(triviaElement.getDistractors());
-            triviaElementToModify.setLevel(triviaElement.getLevel());
-
-            triviaElementRepository.saveAndFlush(triviaElementToModify);
-        } else {
-            action = "C";
-            triviaElementRepository.saveAndFlush(triviaElement);
-        }
-        return action.equals("U") ? convertToDTO(triviaElementToModify) : convertToDTO(triviaElement);
+    public TriviaElementDTO saveOrUpdateTriviaElement(TriviaElement triviaElement) {
+        triviaElementRepository.saveAndFlush(triviaElement);
+        return convertToDTO(triviaElement);
     }
 
     @Override

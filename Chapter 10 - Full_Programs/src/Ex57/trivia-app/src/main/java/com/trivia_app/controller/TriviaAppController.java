@@ -31,14 +31,14 @@ public class TriviaAppController {
     }
 
     @PostMapping
-    public TriviaElementDTO createTriviaElement(@PathVariable Long id, @RequestBody TriviaElement triviaElement) {
-        return triviaAppService.saveOrUpdateTriviaElement(triviaElement.getId(), triviaElement);
+    public TriviaElementDTO createTriviaElement(@RequestBody TriviaElement triviaElement) {
+        return triviaAppService.saveOrUpdateTriviaElement(triviaElement);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TriviaElementDTO> updateTriviaElement(@PathVariable Long id, @RequestBody TriviaElement triviaElement) {
+    public ResponseEntity<TriviaElementDTO> updateTriviaElement(@RequestBody TriviaElement triviaElement) {
         try {
-            TriviaElementDTO updatedTriviaElement = triviaAppService.saveOrUpdateTriviaElement(id, triviaElement);
+            TriviaElementDTO updatedTriviaElement = triviaAppService.saveOrUpdateTriviaElement(triviaElement);
             return ResponseEntity.ok(updatedTriviaElement);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

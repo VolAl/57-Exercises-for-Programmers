@@ -10,7 +10,7 @@ public interface TriviaAppService {
 
     List<TriviaElementDTO> getAllTriviaElements();
     Optional<TriviaElementDTO> getTriviaElementById(Long id);
-    TriviaElementDTO saveOrUpdateTriviaElement(Long id, TriviaElement TriviaElement);
+    TriviaElementDTO saveOrUpdateTriviaElement(TriviaElement TriviaElement);
     void deleteTriviaElement(Long id);
     TriviaElement convertToEntity(TriviaElementDTO TriviaElementDTO);
 
