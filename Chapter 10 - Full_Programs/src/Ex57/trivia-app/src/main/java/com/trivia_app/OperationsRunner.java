@@ -1,9 +1,14 @@
 package com.trivia_app;
 
+import com.trivia_app.config.SecSecurityConfig;
 import com.trivia_app.entity.TriviaElement;
 import com.trivia_app.model.TriviaElementDTO;
 import com.trivia_app.service.TriviaAppService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -12,6 +17,9 @@ import static java.lang.System.in;
 
 @Component
 public class OperationsRunner implements CommandLineRunner {
+
+    @Autowired
+    private SecSecurityConfig secSecurityConfig;
 
     private final static Scanner sc = new Scanner(in);
     private final TriviaAppService triviaAppService;
@@ -27,17 +35,29 @@ public class OperationsRunner implements CommandLineRunner {
 
         System.out.print("Welcome to Trivia App!\nTo proceed you need to login\nEnter your username: ");
         String userName = sc.nextLine();
+        System.out.print("Enter your password: ");
+        String password = sc.nextLine();
 
-        switch (userName) {
-            case "user":
-                playGame(triviaElements);
-                break;
-            case "admin":
-                adminSection(triviaElements);
-                break;
-            default:
-                System.out.println("You're not an authenticated user. Exit.");
-                break;
+        InMemoryUserDetailsManager userDetailsService = secSecurityConfig.userDetailsService();
+        try {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
+            BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+            boolean isPasswordMatches = bcrypt.matches(password, userDetails.getPassword());
+
+            if(isPasswordMatches) {
+                switch (userName) {
+                    case "user":
+                        playGame(triviaElements);
+                        break;
+                    case "admin":
+                        adminSection(triviaElements);
+                        break;
+                }
+            } else {
+                System.out.println("Username and/or Password incorrect. Exit.");
+            }
+        } catch(Exception e) {
+            System.out.println("You're not an authenticated user. Exit.");
         }
 
         sc.close();
