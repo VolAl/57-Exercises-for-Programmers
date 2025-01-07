@@ -6,9 +6,7 @@ import com.trivia_app.service.TriviaAppService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.System.in;
 
@@ -16,7 +14,7 @@ import static java.lang.System.in;
 public class OperationsRunner implements CommandLineRunner {
 
     private final static Scanner sc = new Scanner(in);
-    private TriviaAppService triviaAppService;
+    private final TriviaAppService triviaAppService;
 
     public OperationsRunner(TriviaAppService triviaAppService) {
         this.triviaAppService = triviaAppService;
@@ -207,6 +205,60 @@ public class OperationsRunner implements CommandLineRunner {
     }
 
     private void playGame(List<TriviaElementDTO> triviaElements) {
-        System.out.println("Play a game");
+        List<TriviaElementDTO> triviaElementsLevel1 = new ArrayList<>(triviaElements.stream().filter(t -> t.level() == 1).toList());
+        List<TriviaElementDTO> triviaElementsLevel2 = new ArrayList<>(triviaElements.stream().filter(t -> t.level() == 2).toList());
+        List<TriviaElementDTO> triviaElementsLevel3 = new ArrayList<>(triviaElements.stream().filter(t -> t.level() == 3).toList());
+
+        System.out.println("\nLet's play a game!\nLevel 1");
+        Collections.shuffle(triviaElementsLevel1);
+        playLevel(triviaElementsLevel1);
+
+        System.out.println("\nCongrats! You reached Level 2");
+        Collections.shuffle(triviaElementsLevel2);
+        playLevel(triviaElementsLevel2);
+
+        System.out.println("\nCongrats! You reached Level 3");
+        Collections.shuffle(triviaElementsLevel3);
+        playLevel(triviaElementsLevel3);
+
+        System.out.println("You won the game!");
+    }
+
+    private void playLevel(List<TriviaElementDTO> triviaElementsLevelN) {
+        int correctAnswers = 0;
+        for(TriviaElementDTO t : triviaElementsLevelN) {
+            System.out.println("\n" + t.question());
+            List<String> answers = new ArrayList<>(List.copyOf(t.distractors()));
+            answers.add(t.rightAnswer());
+            Collections.shuffle(answers);
+            int index = 1, rightIndex = 0;
+            for(String s : answers) {
+                if(s.equals(t.rightAnswer())) {
+                    rightIndex = index;
+                }
+                System.out.println(index++ + ") " + s);
+            }
+            System.out.print("Your answer (specify the answer number): ");
+            int answer;
+            try {
+                answer = sc.nextInt();
+                // consume new line
+                sc.nextLine();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+            if(answer == rightIndex) {
+                correctAnswers++;
+                System.out.println("\nCorrect answer!");
+                if(correctAnswers < triviaElementsLevelN.size()) {
+                    System.out.println("Let's see how you do with the next one :)");
+                }
+            } else {
+                System.out.println("\nOh no, wrong answer!\nBetter luck next time :)");
+                sc.close();
+                System.exit(0);
+            }
+        }
     }
 }
