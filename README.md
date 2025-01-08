@@ -16,7 +16,8 @@ The choice of Tech Stack that I adopted for the solutions is ample, given the di
 - *Web Application Exercises* (exercises that have a challenge asking to implement a web application version of the program) &rarr; **Spring Boot (Backend) + Angular (frontend)**
 
 ## Other Implementations details
-I enjoyed delving into the different requests that this book presented, finding creative solutions to the problems at hand.
+I enjoyed delving into the different requests this book presented, finding creative solutions to the problems at hand.<br>
+I particularly loved to challenge myself with paradigms and technologies there were fairly new to me, as the ones used for creating the Mobile and Command-line Applications.
 
 Additionally, in the case of some full programs (Chapter 10), when the exercises didn't explicitly state that a GUI was required, I took this as an additional challenge and found elegant ways to reach a complete implementation of the application, using mainly the console to gather the user's input.
 
